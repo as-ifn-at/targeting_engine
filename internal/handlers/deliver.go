@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"slices"
 	"strings"
+	"sync"
 
 	"github.com/as-ifn-at/targeting_engine/common"
 	"github.com/as-ifn-at/targeting_engine/internal/config"
@@ -41,18 +42,35 @@ func (h *deliverHandler) Get(ctx *gin.Context) {
 		return
 	}
 
-	res := []models.DeliverResponse{}
+	wg := sync.WaitGroup{}
+	resultCh := make(chan models.DeliverResponse, len(Campaigns))
+
 	for _, campaign := range Campaigns {
 		rule, ok := Rules[campaign.CampaignId]
-		if ok && campaign.Status == common.CampaignActiveStatus &&
-			rulesApplicable(rule.Rules, urlFields) {
-			res = append(res, models.DeliverResponse{
-				CampaignId: campaign.CampaignId,
-				Image:      campaign.Image,
-				CTA:        campaign.CTA,
-			})
+		if !ok || campaign.Status != common.CampaignActiveStatus {
+			continue
 		}
+
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			if rulesApplicable(rule.Rules, urlFields) {
+				resultCh <- models.DeliverResponse{
+					CampaignId: campaign.CampaignId,
+					Image:      campaign.Image,
+					CTA:        campaign.CTA,
+				}
+			}
+		}()
 	}
+	wg.Wait()
+	close(resultCh)
+
+	res := make([]models.DeliverResponse, 0)
+	for r := range resultCh {
+		res = append(res, r)
+	}
+
 	if len(res) == 0 {
 		ctx.IndentedJSON(http.StatusNoContent, res)
 		h.logger.Error().Msg("no records found")

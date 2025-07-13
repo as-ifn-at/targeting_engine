@@ -1,7 +1,7 @@
 package handlers
 
 import (
-	"github.com/as-ifn-at/REST/internal/config"
+	"github.com/as-ifn-at/targeting_engine/internal/config"
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog"
 )

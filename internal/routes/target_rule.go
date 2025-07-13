@@ -1,7 +1,7 @@
 package routes
 
 import (
-	"github.com/as-ifn-at/REST/internal/handlers"
+	"github.com/as-ifn-at/targeting_engine/internal/handlers"
 )
 
 func (r *router) targetRuleRoutes() {

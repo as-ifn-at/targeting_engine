@@ -3,8 +3,8 @@ package routes
 import (
 	"net/http"
 
-	"github.com/as-ifn-at/REST/internal/config"
-	"github.com/as-ifn-at/REST/internal/middlewares"
+	"github.com/as-ifn-at/targeting_engine/internal/config"
+	"github.com/as-ifn-at/targeting_engine/internal/middlewares"
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog"
 )

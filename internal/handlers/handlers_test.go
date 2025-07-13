@@ -9,8 +9,8 @@ import (
 	"os"
 	"testing"
 
-	"github.com/as-ifn-at/REST/internal/config"
-	"github.com/as-ifn-at/REST/models"
+	"github.com/as-ifn-at/targeting_engine/internal/config"
+	"github.com/as-ifn-at/targeting_engine/models"
 	"github.com/gin-gonic/gin"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"

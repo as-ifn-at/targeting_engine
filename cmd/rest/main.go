@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/as-ifn-at/REST/internal/config"
-	"github.com/as-ifn-at/REST/internal/routes"
+	"github.com/as-ifn-at/targeting_engine/internal/config"
+	"github.com/as-ifn-at/targeting_engine/internal/routes"
 	"github.com/rs/zerolog"
 )
 

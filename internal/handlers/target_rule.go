@@ -56,7 +56,7 @@ func (h *ruleHandler) Save(ctx *gin.Context) {
 
 	if err := validateRules(newTargetRules.Rules); err != nil {
 		h.logger.Error().Msg(fmt.Sprintf("error applying rules to campaign; %v", err))
-		ctx.IndentedJSON(http.StatusNotFound, gin.H{"error": err.Error()})
+		ctx.IndentedJSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 

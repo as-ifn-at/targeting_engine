@@ -1,6 +1,9 @@
 package config
 
-import "os"
+import (
+	"cmp"
+	"os"
+)
 
 type Config struct {
 	Port         string
@@ -20,18 +23,11 @@ var (
 	DefaultDBPath = "data"
 )
 
-func getEnvOrDefault(env, defaultVal string) string {
-	if envVal := os.Getenv(env); envVal != "" {
-		return envVal
-	}
-	return defaultVal
-}
-
 func Load() *Config {
 	config := &Config{}
-	config.DatabaseName = getEnvOrDefault(DBNAME, DefaultDbName)
-	config.Port = getEnvOrDefault(PORT, DefaultPort)
-	config.Dbpath = getEnvOrDefault(DBPATH, DefaultDBPath)
+	config.DatabaseName = cmp.Or(os.Getenv(DBNAME), DefaultDbName)
+	config.Port = cmp.Or(os.Getenv(PORT), DefaultPort)
+	config.Dbpath = cmp.Or(os.Getenv(DBPATH), DefaultDBPath)
 
 	return config
 }

@@ -153,8 +153,8 @@ var _ = Describe("campaign test cases", func() {
 	})
 
 	When("Get is called", func() {
-		It("should return the campaign", func() {
-			Rules[""] = models.TargetRules{
+		It("should return the rule", func() {
+			Rules["duolingo"] = models.TargetRules{
 				CampaignId: "duolingo",
 				Rules: models.RuleSet{
 					IncludeCountry: []string{"US"},
